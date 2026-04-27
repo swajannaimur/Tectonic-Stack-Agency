@@ -2,3 +2,15 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+/* body { overflow-anchor: none; } */
+
+Chrome, Safari এবং Opera-এর জন্য
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* IE, Edge এবং Firefox-এর জন্য */
+html {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}

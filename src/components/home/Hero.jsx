@@ -20,7 +20,8 @@ export default function Hero() {
 
   const totalFrames = 360;
   const getImageUrl = (i) => `/Tectonic/sec-${i}.avif`;
-  const bgImageUrl = "/ideas-blur-2.webp";
+  const bgImageUrl2 = "/ideas-blur-2.webp";
+  const bgImageUrl = "/hero-layer.webp";
 
   useEffect(() => {
     const loadedImages = [];
@@ -147,15 +148,18 @@ export default function Hero() {
 
       <section 
         ref={containerRef} 
-        className="relative w-full h-screen overflow-hidden bg-black"
+        className="relative w-full h-screen overflow-hidden "
         style={{
           backgroundImage: `url(${bgImageUrl})`,
           backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundColor: "#000"
+          
         }}
       >
-        <div className="absolute inset-0 bg-black/40 z-0" />
+        {/* <div className="absolute inset-0  z-0" /> */}
+        <div 
+    className="absolute inset-0 z-0 bg-center bg-cover bg-no-repeat " // এখানে আপনার ইচ্ছামতো opacity বা blur দিতে পারেন
+    style={{ backgroundImage: `url(${bgImageUrl2})` }}
+  />
         
         <canvas 
           ref={canvasRef} 
@@ -168,6 +172,8 @@ export default function Hero() {
               <h1 className="text-4xl md:text-8xl font-black leading-[0.8] tracking-tighter uppercase">
                 Design That<br />Feels.
               </h1>
+              <p className=" w-[40%] ">Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus fuga laboriosam voluptatem veritatis vitae neque cumque, 
+                hic reiciendis ea in blanditiis obcaecati excepturi et saepe recusandae illo architecto praesentium sapiente!</p>
               <button className="bg-white text-black px-12 py-5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-white/90 transition-all">
                 Let's Talk ↗
               </button>
