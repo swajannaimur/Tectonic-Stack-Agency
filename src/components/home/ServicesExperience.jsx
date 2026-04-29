@@ -6,7 +6,6 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ── SVG Icons ─────────────────────────────────────────────────────────────────
 const icons = {
   uiux: (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -35,7 +34,6 @@ const icons = {
   ),
 };
 
-// ── Service list ──────────────────────────────────────────────────────────────
 const services = [
   { id: "uiux",      label: "UI/UX",        icon: icons.uiux,      position: "top-left"     },
   { id: "dev",       label: "Development",  icon: icons.dev,       position: "top-right"    },
@@ -43,9 +41,7 @@ const services = [
   { id: "animation", label: "3D Animation", icon: icons.animation, position: "bottom-right" },
 ];
 
-// ── Button position map ───────────────────────────────────────────────────────
-// p1 = tightly clustered around center (initial/return state)
-// p2 = spread out to screen edges (after scroll, with float)
+
 const posMap = {
   "top-left":     { p1: { x: "-20vw", y: "-13vh" }, p2: { x: "-42vw", y: "-36vh" } },
   "top-right":    { p1: { x: "14vw",  y: "-16vh" }, p2: { x: "36vw",  y: "-36vh" } },
@@ -69,10 +65,8 @@ export default function ServicesExperience() {
     const subtitle = subtitleRef.current;
     const tags     = tagsRef.current;
 
-    // Track active float tweens so we can kill them cleanly
     const floatTweens = [];
 
-    // Start infinite floating — triggered only after buttons reach p2 (edges)
     const startFloat = () => {
       floatTweens.forEach(t => t.kill());
       floatTweens.length = 0;
@@ -92,18 +86,15 @@ export default function ServicesExperience() {
       });
     };
 
-    // Stop floating — called when buttons return to center on scroll up
     const stopFloat = () => {
       floatTweens.forEach(t => t.kill());
       floatTweens.length = 0;
     };
 
-    // ── Initial states ────────────────────────────────────────────────────────
-    // Center heading starts above the screen, animates down into position
+ 
     gsap.set(center,   { opacity: 0, y: -100 });
     gsap.set(subtitle, { opacity: 0, y: -30  });
 
-    // Buttons always visible from the start, positioned close to center at p1
     tags.forEach((tag, i) => {
       const { p1 } = posMap[services[i].position];
       gsap.set(tag, {
@@ -116,8 +107,7 @@ export default function ServicesExperience() {
       });
     });
 
-    // ── Main scroll-driven timeline ───────────────────────────────────────────
-    // Section pins for 3× the viewport height of scroll distance
+  
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
@@ -128,13 +118,11 @@ export default function ServicesExperience() {
         pinSpacing: true,
         anticipatePin: 1,
         onEnterBack: () => {
-          // Scrolling back into section — kill float before tl reverses positions
           stopFloat();
         },
       },
     });
 
-    // Phase 1 (0 → 0.15): Top-left and top-right texts fly up and fade out
     tl.to([topLeft, topRight], {
       y: -100,
       opacity: 0,
@@ -142,7 +130,6 @@ export default function ServicesExperience() {
       ease: "power2.in",
     }, 0);
 
-    // Phase 2 (0.08 → 0.35): Center heading drops in from above
     tl.to(center, {
       opacity: 1,
       y: 0,
@@ -150,7 +137,6 @@ export default function ServicesExperience() {
       ease: "power3.out",
     }, 0.08);
 
-    // Phase 2b (0.18): Subtitle follows slightly after the heading
     tl.to(subtitle, {
       opacity: 1,
       y: 0,
@@ -158,7 +144,6 @@ export default function ServicesExperience() {
       ease: "power2.out",
     }, 0.18);
 
-    // Phase 3 (0.4 → 0.8): Buttons spread from center out to edge positions
     tags.forEach((tag, i) => {
       const { p2 } = posMap[services[i].position];
       tl.to(tag, {
@@ -166,15 +151,13 @@ export default function ServicesExperience() {
         y: p2.y,
         duration: 0.4,
         ease: "power2.inOut",
-        // Fire float callbacks only on the last tag to avoid duplicates
         ...(i === tags.length - 1 ? {
-          onComplete: startFloat,       // buttons at edges — begin floating
-          onReverseComplete: stopFloat, // scroll reversed — stop floating
+          onComplete: startFloat,       
+          onReverseComplete: stopFloat, 
         } : {}),
       }, 0.4 + i * 0.03);
     });
 
-    // Phase 4 is implicit: scrub reversal returns buttons to p1 on scroll up
 
     return () => {
       stopFloat();
@@ -188,7 +171,6 @@ export default function ServicesExperience() {
       className="relative w-full h-screen overflow-hidden flex items-center justify-center"
       style={{ background: "#ffffff" }}
     >
-      {/* ── Fullscreen Vimeo background video ────────────────────────────────── */}
       <div className="absolute inset-0" style={{ zIndex: 0, overflow: "hidden" }}>
         <iframe
           src="https://player.vimeo.com/video/1161504005?background=1&autoplay=1&loop=1&muted=1"
@@ -197,9 +179,9 @@ export default function ServicesExperience() {
             top: "50%",
             left: "50%",
             width: "100vw",
-            height: "56.25vw",    /* maintain 16:9 */
+            height: "56.25vw",    
             minHeight: "100vh",
-            minWidth: "177.78vh", /* maintain 16:9 */
+            minWidth: "177.78vh", 
             transform: "translate(-50%, -50%)",
             border: "none",
             pointerEvents: "none",
@@ -207,14 +189,12 @@ export default function ServicesExperience() {
           allow="autoplay; fullscreen"
           title="background video"
         />
-        {/* Soft white overlay keeps text readable over the video */}
         <div
           className="absolute inset-0"
           style={{ background: "rgba(255,255,255,0.38)" }}
         />
       </div>
 
-      {/* ── Top-left heading (phase 1 only) ──────────────────────────────────── */}
       <div
         ref={topLeftRef}
         className="absolute"
@@ -235,7 +215,6 @@ export default function ServicesExperience() {
         </h2>
       </div>
 
-      {/* ── Top-right tagline (phase 1 only) ─────────────────────────────────── */}
       <div
         ref={topRightRef}
         className="absolute"
@@ -255,7 +234,6 @@ export default function ServicesExperience() {
         </p>
       </div>
 
-      {/* ── Center heading (phase 2) — drops in from above on scroll ─────────── */}
       <div
         ref={centerRef}
         className="absolute flex flex-col items-center text-center"
@@ -290,8 +268,7 @@ export default function ServicesExperience() {
         </p>
       </div>
 
-      {/* ── Service tag buttons ───────────────────────────────────────────────── */}
-      {/* Always visible. Start close to center (p1), spread to edges (p2) on scroll. */}
+     
       {services.map((svc, i) => (
         <div
           key={svc.id}

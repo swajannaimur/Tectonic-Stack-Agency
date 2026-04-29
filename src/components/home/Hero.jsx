@@ -157,7 +157,7 @@ export default function Hero() {
       >
         {/* <div className="absolute inset-0  z-0" /> */}
         <div 
-    className="absolute inset-0 z-0 bg-center bg-cover bg-no-repeat " // এখানে আপনার ইচ্ছামতো opacity বা blur দিতে পারেন
+    className="absolute inset-0 z-0 bg-center bg-cover bg-no-repeat " 
     style={{ backgroundImage: `url(${bgImageUrl2})` }}
   />
         

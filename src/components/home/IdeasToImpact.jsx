@@ -1,140 +1,189 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
 import { Paragraph, SectionTitle } from "../common/typography";
 import FlipButton from "../shared/FlipButton";
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function IdeasToImpact() {
   const sectionRef = useRef(null);
   const bgRef = useRef(null);
-  const innerBgRef = useRef(null); // 🔥 moving bg
-  const contentRef = useRef(null); // 🔥 text
+  const innerBgRef = useRef(null);
+  const contentRef = useRef(null);
 
-  useGSAP(() => {
-    // 🔹 initial state
-    gsap.set(bgRef.current, { opacity: 0, scale: 0.9 });
-    gsap.set(innerBgRef.current, { y: 100, opacity: 0 });
-    gsap.set(contentRef.current, { y: 120, opacity: 0 });
+  const hasAnimated = useRef(false);
+  const animationDone = useRef(false);
+  const isLocked = useRef(false);
 
-    const tl = gsap.timeline({ paused: true });
+  useEffect(() => {
+    const section = sectionRef.current;
+    const bg = bgRef.current;
+    const innerBg = innerBgRef.current;
+    const content = contentRef.current;
 
-    // 🔹 main bg
-    tl.to(bgRef.current, {
-      scale: 1,
-      opacity: 1,
-      duration: 1,
-      ease: "power2.out",
-    })
+    gsap.set(bg, { scale: 0.9, opacity: 0 });
+    gsap.set(innerBg, { scale: 0.8, opacity: 0, y: 50 });
+    gsap.set(content, { opacity: 0, y: 30 });
 
-      // 🔹 small bg up
-      .to(innerBgRef.current, {
-        y: 0,
-        opacity: 1,
-        duration: 0.8,
-        ease: "power3.out",
-      })
+    const unlock = () => {
+      isLocked.current = false;
+      animationDone.current = true;
+      if (window.lenis) window.lenis.start();
+    };
 
-      // 🔹 content follow (drag feel)
-      .to(
-        contentRef.current,
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          ease: "power3.out",
-        },
-        "-=0.5" 
+    const startAnimation = () => {
+      const tl = gsap.timeline({ onComplete: unlock });
+
+      tl.fromTo(bg, 
+        { y: 100, opacity: 0, scale: 1.1 }, 
+        { y: 0, opacity: 1, scale: 1, duration: 1.2, ease: "power3.out" }
       );
 
-    ScrollTrigger.create({
-      trigger: sectionRef.current,
-      start: "top 50%",
+      tl.fromTo(innerBg, 
+        { y: 150, opacity: 0, scale: 0.8 }, 
+        { y: 0, opacity: 1, scale: 1, duration: 1, ease: "power3.out" },
+        "-=0.8"
+      );
 
-      onEnter: () => {
-        const section = sectionRef.current;
-        const rect = section.getBoundingClientRect();
-        const scrollTop = window.lenis?.scroll ?? window.pageYOffset;
+      tl.fromTo(content, 
+        { y: 80, opacity: 0 }, 
+        { y: 0, opacity: 1, duration: 1, ease: "power3.out" },
+        "-=0.7" 
+      );
+    };
 
-        const targetScroll =
-          scrollTop +
-          rect.top +
-          rect.height / 2 -
-          window.innerHeight / 2;
+    const runEntrance = () => {
+      if (hasAnimated.current) return;
+      hasAnimated.current = true;
 
-        if (window.lenis) {
-          window.lenis.scrollTo(targetScroll, {
-            duration: 1,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            onComplete: () => tl.restart(),
-          });
-        } else {
-          window.scrollTo({ top: targetScroll, behavior: "smooth" });
-          tl.restart();
-        }
-      },
+      const rect = section.getBoundingClientRect();
+      const scrollTop = window.lenis?.scroll ?? window.pageYOffset;
+      const target = scrollTop + rect.top + rect.height / 2 - window.innerHeight / 2;
 
-      onLeaveBack: () => {
-        tl.pause(0);
-        gsap.to([bgRef.current, innerBgRef.current, contentRef.current], {
-          opacity: 0,
-          y: 100,
-          duration: 0.5,
-          ease: "power2.inOut",
+      if (window.lenis) {
+        window.lenis.scrollTo(target, {
+          duration: 1.5, 
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
+          onStart: () => {
+            isLocked.current = true;
+            setTimeout(startAnimation, 600); 
+          },
+          onComplete: () => {
+            if (window.lenis) window.lenis.stop();
+          },
+        });
+      } else {
+        isLocked.current = true;
+        window.scrollTo({ top: target, behavior: "smooth" });
+        setTimeout(startAnimation, 800);
+      }
+    };
+
+    const runExit = () => {
+      if (!hasAnimated.current && !animationDone.current) return;
+      hasAnimated.current = false;
+      animationDone.current = false;
+      isLocked.current = false;
+
+      gsap.to([bg, innerBg, content], { 
+        opacity: 0, 
+        y: 30, 
+        scale: 0.9, 
+        duration: 0.6, 
+        ease: "power2.in" 
+      });
+    };
+
+    const blockInputs = (e) => {
+      if (isLocked.current) {
+        if (e.cancelable) e.preventDefault();
+        e.stopImmediatePropagation();
+        return false;
+      }
+    };
+
+    const blockKeys = (e) => {
+      if (isLocked.current) {
+        const keys = ["ArrowDown", "ArrowUp", " ", "PageDown", "PageUp", "Home", "End"];
+        if (keys.includes(e.key)) e.preventDefault();
+      }
+    };
+
+    window.addEventListener("wheel", blockInputs, { passive: false, capture: true });
+    window.addEventListener("touchmove", blockInputs, { passive: false, capture: true });
+    window.addEventListener("keydown", blockKeys, { capture: true });
+
+    let lastScrollY = window.scrollY;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const isScrollingDown = window.scrollY > lastScrollY;
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.2 && isScrollingDown) {
+            runEntrance();
+          } else if (!entry.isIntersecting && !isScrollingDown) {
+            runExit();
+          }
+          lastScrollY = window.scrollY;
         });
       },
-    });
-  }, { scope: sectionRef });
+      { threshold: [0, 0.2, 0.8] }
+    );
+
+    observer.observe(section);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("wheel", blockInputs, { capture: true });
+      window.removeEventListener("touchmove", blockInputs, { capture: true });
+      window.removeEventListener("keydown", blockKeys, { capture: true });
+      if (window.lenis) window.lenis.start();
+    };
+  }, []);
 
   return (
     <section
       ref={sectionRef}
-      className="relative h-[1500px] w-full overflow-hidden flex items-center justify-center"
+      className="relative w-full overflow-hidden flex flex-col items-center justify-center"
+      style={{ minHeight: "100vh" }}
     >
-      {/* 🔹 full bg */}
-      <div
-        ref={bgRef}
-        className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: "url('/ideas-blur-2.webp')",
-        }}
-      />
-
-      {/* 🔹 moving small bg */}
-      <div
-        ref={innerBgRef}
-        className="absolute z-10"
-        style={{
-          width: "400px",
-          height: "400px",
-          backgroundImage: "url('/ideas-blur-3.webp')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}
-      />
-
-      {/* 🔹 content */}
-      <div
-        ref={contentRef}
-        className="relative z-20 w-[70%] flex flex-col items-center text-center gap-8 "
-      >
-        <SectionTitle className="text-black">
-          Every <span className="font-bold">Experience</span> Begins With a Feeling
-        </SectionTitle>
-
-        <Paragraph className="text-black">
-          We blend creativity, emotion, and innovation to craft digital
-          worlds that invite exploration and inspire connection.
-        </Paragraph>
-
-        <FlipButton
-          text="ABOUT US"
-          className="text-black hover:bg-gray-200 border border-black"
+      <div className="relative w-full h-screen flex items-center justify-center overflow-hidden">
+        <div
+          ref={bgRef}
+          className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: "url('/ideas-blur-2.webp')",
+            willChange: "transform, opacity",
+          }}
         />
+
+        <div
+          ref={innerBgRef}
+          className="absolute z-10"
+          style={{
+            width: "500px",
+            height: "500px",
+            backgroundImage: "url('/ideas-blur-3.webp')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            willChange: "transform, opacity",
+          }}
+        />
+
+        <div
+          ref={contentRef}
+          className="relative z-20 w-full max-w-2xl flex flex-col items-center text-center px-6 gap-8"
+        >
+          <SectionTitle className="text-black">
+            From <span className="font-bold">Ideas</span> to Lasting Impact
+          </SectionTitle>
+          <Paragraph className="text-black">
+            We turn bold visions into reality, combining strategic thinking with 
+            flawless execution to move your brand forward.
+          </Paragraph>
+          <FlipButton
+            text="OUR PROCESS"
+            className="text-black hover:bg-gray-200 border border-black"
+          />
+        </div>
       </div>
     </section>
   );
