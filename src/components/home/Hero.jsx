@@ -12,6 +12,7 @@ export default function Hero() {
   const textLeftRef = useRef(null);
   const textRightRef = useRef(null);
   const loaderRef = useRef(null);
+  const heroSectionRef = useRef(null);
 
   const [images, setImages] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -20,15 +21,11 @@ export default function Hero() {
 
   const totalFrames = 360;
   const getImageUrl = (i) => `/Tectonic/sec-${i}.avif`;
-  const bgImageUrl2 = "/ideas-blur-2.webp";
   const bgImageUrl = "/hero-layer.webp";
 
   useEffect(() => {
     const loadedImages = [];
     let loadedCount = 0;
-
-    const bgImg = new Image();
-    bgImg.src = bgImageUrl;
 
     for (let i = 0; i < totalFrames; i++) {
       const img = new Image();
@@ -50,6 +47,11 @@ export default function Hero() {
               ease: "power2.inOut",
               onComplete: () => {
                 setIsLoading(false);
+                // পুরো hero section দেখানো শুরু
+                gsap.fromTo(heroSectionRef.current,
+                  { opacity: 0 },
+                  { opacity: 1, duration: 0.5, ease: "power2.out" }
+                );
                 ScrollTrigger.refresh();
               }
             });
@@ -89,7 +91,8 @@ export default function Hero() {
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
-        end: "+=4000", 
+        // end: "+=4000", 
+        end: "+=8000",
         scrub: 1.2,
         pin: true,
         pinSpacing: true, 
@@ -117,11 +120,12 @@ export default function Hero() {
 
   return (
     <>
+      {/* Loader */}
       <div 
         ref={loaderRef}
         className="fixed inset-0 z-[9999] bg-[#0a0a0a] flex flex-col justify-between"
-        style={{ pointerEvents: isLoading ? "all" : "none" }}
       >
+        
         <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
           <img src="/mdx-placeholder.png" className="w-full h-full object-cover" alt="Loading" />
         </div>
@@ -146,56 +150,66 @@ export default function Hero() {
         </div>
       </div>
 
-      <section 
-        ref={containerRef} 
-        className="relative w-full h-screen overflow-hidden "
-        style={{
-          backgroundImage: `url(${bgImageUrl})`,
-          backgroundSize: "cover",
+      {/* Hero Section - initially hidden */}
+      <div ref={heroSectionRef} className="opacity-0">
+        <section 
+          ref={containerRef} 
+          className="relative w-full h-screen overflow-hidden"
+          style={{
+            backgroundImage: `url(${bgImageUrl})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          {/* bgImageUrl2 - সরাসরি এখানে */}
+          <div 
+            className="absolute inset-0 z-0 " 
+            style={{ 
+              backgroundImage: `url("/ideas-blur-2.webp")`,
+              backgroundSize: "contain",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              
+              // opacity: 0.5
+              opacity: 1
+            }}
+          />
           
-        }}
-      >
-        {/* <div className="absolute inset-0  z-0" /> */}
-        <div 
-    className="absolute inset-0 z-0 bg-center bg-cover bg-no-repeat " 
-    style={{ backgroundImage: `url(${bgImageUrl2})` }}
-  />
-        
-        <canvas 
-          ref={canvasRef} 
-          className="relative z-10 block w-full h-full mix-blend-screen opacity-90" 
-        />
-        
-        <div className="absolute inset-0 z-20 w-full h-full p-8 md:p-16 flex flex-col justify-end pointer-events-none">
-          <div className="grid md:grid-cols-[2fr,1fr] gap-12 items-end">
-            <div ref={textLeftRef} className="text-white space-y-6 pointer-events-auto">
-              <h1 className="text-4xl md:text-8xl font-black leading-[0.8] tracking-tighter uppercase">
-                Design That<br />Feels.
-              </h1>
-              <p className=" w-[40%] ">Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus fuga laboriosam voluptatem veritatis vitae neque cumque, 
-                hic reiciendis ea in blanditiis obcaecati excepturi et saepe recusandae illo architecto praesentium sapiente!</p>
-              <button className="bg-white text-black px-12 py-5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-white/90 transition-all">
-                Let's Talk ↗
-              </button>
-            </div>
-            
-            <div ref={textRightRef} className="text-white space-y-12 flex flex-col items-end pointer-events-auto">
-              <p className="text-white/60 text-right max-w-xs text-sm font-light leading-relaxed">
-                We craft high-end digital experiences that bridge the gap between <span className="text-white">vision and reality.</span>
-              </p>
-              <div className="flex flex-wrap gap-2 justify-end">
-                {['UI/UX', '3D VISUALS', 'NEXT.JS'].map(tag => (
-                  <span key={tag} className="border border-white/10 px-5 py-2.5 rounded-full text-[10px] tracking-widest uppercase bg-white/5 backdrop-blur-md">
-                    {tag}
-                  </span>
-                ))}
+          <canvas 
+            ref={canvasRef} 
+            className="relative z-10 block w-full h-full mix-blend-screen opacity-90" 
+          />
+          
+          {/* কন্টেন্ট */}
+          <div className="absolute inset-0 z-20 w-full h-full p-8 md:p-16 flex flex-col justify-end pointer-events-none">
+            <div className="grid md:grid-cols-[2fr,1fr] gap-12 items-end">
+              <div ref={textLeftRef} className="text-white space-y-6 pointer-events-auto">
+                <h1 className="text-4xl md:text-8xl font-black leading-[0.8] tracking-tighter uppercase">
+                  Design That<br />Feels.
+                </h1>
+                <p className="md:w-[60%] lg:w-[40%]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus fuga laboriosam voluptatem veritatis vitae neque cumque, 
+                  hic reiciendis ea in blanditiis obcaecati excepturi et saepe recusandae illo architecto praesentium sapiente!</p>
+                <button className="bg-white text-black px-12 py-5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-white/90 transition-all">
+                  Let's Talk ↗
+                </button>
+              </div>
+              
+              <div ref={textRightRef} className="text-white space-y-12 flex flex-col items-end pointer-events-auto">
+                <p className="text-white/60 text-right max-w-xs text-sm font-light leading-relaxed">
+                  We craft high-end digital experiences that bridge the gap between <span className="text-white">vision and reality.</span>
+                </p>
+                <div className="flex flex-wrap gap-2 justify-end">
+                  {['UI/UX', '3D VISUALS', 'NEXT.JS'].map(tag => (
+                    <span key={tag} className="border border-white/10 px-5 py-2.5 rounded-full text-[10px] tracking-widest uppercase bg-white/5 backdrop-blur-md">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-    
+        </section>
+      </div>
     </>
   );
 }

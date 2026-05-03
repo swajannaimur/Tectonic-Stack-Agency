@@ -83,7 +83,7 @@ export default function SceneTracker() {
 
       <div ref={trackerRef} className="fixed bottom-16 left-1/2 -translate-x-1/2 flex gap-12 z-50 pointer-events-none">
         {[0, 1, 2, 3].map((i) => (
-          <div key={i} className="relative w-[1.5px] h-16 bg-gray-200 overflow-hidden">
+          <div key={i} className="relative w-[1.5px] h-16 overflow-hidden">
             <div className={`line-${i} absolute inset-0 w-full bg-black translate-y-[25px] opacity-20`} />
           </div>
         ))}
