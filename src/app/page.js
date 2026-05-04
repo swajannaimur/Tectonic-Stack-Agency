@@ -6,6 +6,7 @@ import Hero from "@/components/home/Hero";
 import OurCraft from "@/components/home/OurCraft";
 import ServicesExperience from "@/components/home/ServicesExperience";
 import WatchShowReel from "@/components/home/WatchShowReel";
+import Footer from "@/components/layout/Footer";
 
 
 export default function Home() {
@@ -16,6 +17,7 @@ export default function Home() {
       {/* <div className=" h-screen" ></div> */}
       <OurCraft />
       <ConnectWithUs />
+      <Footer />
       {/* <SceneTracker /> */}
       {/* <WatchShowReel /> */}
       {/* <ServicesExperience /> */}
