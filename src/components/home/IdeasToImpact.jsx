@@ -157,13 +157,14 @@ export default function IdeasToImpact() {
 
         <div
           ref={innerBgRef}
-          className="absolute z-10"
+          className="absolute z-10 "
           style={{
-            width: "500px",
-            height: "500px",
+            width: "2000px",
+            height: "800px",
             backgroundImage: "url('/ideas-blur-3.webp')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
+            backgroundSize: "contain",
+            backgroundPosition: "bottom",
+            backgroundRepeat: "no-repeat",
             willChange: "transform, opacity",
           }}
         />
