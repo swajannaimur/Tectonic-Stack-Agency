@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { FbIcon, LiIcon, SendIcon, TkIcon, XIcon, YtIcon } from "../icons";
+import { SectionTitle } from "../common/typography";
 
 const LETTERS = [
   {
@@ -60,6 +61,7 @@ export default function Footer() {
           <span className="text-[#555] font-normal">brewing in your</span><br />
           <span className="text-[#555] font-normal">mind?</span>
         </h2>
+        <SectionTitle>zillur</SectionTitle>
 
         <div className="flex items-center justify-between pb-9 border-b border-white/10">
           <a href="mailto:hello@mdx.so" className="flex items-center gap-3 text-white no-underline group">

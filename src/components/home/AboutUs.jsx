@@ -3,7 +3,7 @@ import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Paragraph, SectionTitle } from "../common/typography";
-import FlipButton from "../shared/FlipButton";
+import FlipButton from "../ui/FlipButton";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -157,7 +157,7 @@ const startAnimation = () => {
         ref={bgRef}
         className="absolute inset-0 w-full h-full"
         style={{
-          backgroundImage: "url('/clear-globe.webp')",
+          backgroundImage: "url('/images/projects/clear-globe.webp')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           willChange: "transform, opacity",

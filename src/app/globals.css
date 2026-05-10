@@ -3,6 +3,30 @@
 @import "shadcn/tailwind.css";
 
 
+/* =========================
+   GLOBAL TYPOGRAPHY
+========================= */
+
+/* Body font */
+body {
+  font-family: var(--font-inter);
+}
+
+/* Headings font */
+.font-heading {
+  font-family: var(--font-montserrat);
+}
+
+/* Code font */
+code, pre {
+  font-family: var(--font-geist-mono);
+}
+
+/* =========================
+   OPTIONAL SETTINGS
+========================= */
+
+
 /* body { overflow-anchor: none; } */
 
 /* Chrome, Safari এবং Opera-এর জন্য */

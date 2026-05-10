@@ -165,7 +165,8 @@ export default function WatchShowReel() {
     <section
       ref={sectionRef}
       className="relative w-full bg-white" 
-      style={{ height: "260vh" }} 
+      // style={{ height: "260vh" }} 
+      style={{ height: "100" }} 
     >
  
       <div className="sticky top-10 mx-auto w-[94%] h-[calc(100vh-40px)]  flex items-start justify-center overflow-hidden ">
@@ -206,9 +207,9 @@ export default function WatchShowReel() {
           </div>
         </div>
       </div>
-      <div className="  h-screen relative z-20">
+      {/* <div className="  h-screen relative z-20">
           <ServicesExperience />
-      </div>
+      </div> */}
     </section>
   );
 }
