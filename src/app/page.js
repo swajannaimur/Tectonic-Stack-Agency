@@ -10,13 +10,12 @@ export default function Home() {
   return (
     <div>
       <section className="relative isolate z-10">
-  {/* <Hero /> */}
-  <Hero />
-</section>
+        <Hero />
+     </section>
 
-              <section className="relative isolate z-10">
-  <SceneTracker />
-</section>
+    <section className="relative isolate z-10">
+      <SceneTracker />
+    </section>
       
       <OurCraft />
       <ConnectWithUs />

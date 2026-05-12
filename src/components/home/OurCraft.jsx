@@ -26,7 +26,7 @@ const OurCraft = () => {
 
   return (
     <section className="bg-black text-white py-20 px-10 relative z-10 isolate min-h-screen">
-      <div className="flex justify-between items-end mb-16">
+      <div className="flex flex-col md:flex-row justify-between items-end mb-16">
         <h2 className="text-5xl font-medium leading-tight">Our Craft,<br/> Your Expression.</h2>
        <div>
          <ViewAllButton 
