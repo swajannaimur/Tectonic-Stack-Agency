@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { HeroCanvas } from "./HeroCanvas";
 import { HeroLoader, HeroContent } from "./HeroContent";
 import { BG_IMAGE_URL, BLUR_IMAGE_URL, getImageUrl, TOTAL_FRAMES } from "./hero.config";
+import FlipButton from "@/components/ui/FlipButton";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -136,6 +137,7 @@ export default function Hero() {
           
           <HeroCanvas images={images} isLoading={isLoading} containerRef={containerRef} />
         </section>
+
         
         <HeroContent
           ref={contentContainerRef}

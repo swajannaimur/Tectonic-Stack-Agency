@@ -1,7 +1,7 @@
 "use client";
 import SceneTracker from "@/components/common/SenceTracker";
 import ConnectWithUs from "@/components/home/ConnectWithUs";
-import Hero from "@/components/home/hero/Hero";
+import Hero from "@/components/home/Hero";
 import OurCraft from "@/components/home/OurCraft";
 import Footer from "@/components/layout/Footer";
 
