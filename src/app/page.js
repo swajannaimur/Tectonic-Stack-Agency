@@ -18,7 +18,11 @@ export default function Home() {
     </section>
       
       <OurCraft />
-      <ConnectWithUs />
+
+        <section className="relative isolate z-10">
+        <ConnectWithUs />
+     </section>
+      
       <Footer />
     </div>
   );
