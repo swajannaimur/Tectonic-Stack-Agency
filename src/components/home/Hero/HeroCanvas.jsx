@@ -4,7 +4,7 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { TOTAL_FRAMES } from "./hero.config";
+import { TOTAL_FRAMES } from "./Hero.config";
 
 gsap.registerPlugin(ScrollTrigger);
 

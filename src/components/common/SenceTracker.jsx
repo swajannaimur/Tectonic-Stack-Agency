@@ -58,7 +58,7 @@ export default function SceneTracker() {
   );
 
   return (
-    <div ref={container} className="relative w-full">
+    <div ref={container} className="relative w-full space-y-20 ">
 
       <section className="scene-trigger min-h-screen w-full relative ">
         <AboutUs />

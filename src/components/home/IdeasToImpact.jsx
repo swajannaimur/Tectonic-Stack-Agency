@@ -147,19 +147,24 @@ export default function IdeasToImpact() {
       <div className="relative w-full h-screen flex items-center justify-center overflow-hidden">
         <div
           ref={bgRef}
-          className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: "url('/images/projects/ideas-blur-2.webp')",
-            willChange: "transform, opacity",
-          }}
+          className="absolute inset-0 w-full h-full"
+  style={{
+    backgroundImage: "url('/images/projects/ideas-blur-2.webp')",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    willChange: "transform, opacity",
+    maskImage: "radial-gradient(ellipse 60% 55% at 50% 50%, black 30%, transparent 100%)",
+    WebkitMaskImage: "radial-gradient(ellipse 60% 55% at 50% 50%, black 30%, transparent 100%)",
+  }}
         />
 
         <div
           ref={innerBgRef}
-          className="absolute z-10 "
+          className="absolute z-10   "
           style={{
-            width: "2000px",
-            height: "800px",
+            width: "1000px",
+            height: "500px",
             backgroundImage: "url('/images/projects/ideas-blur-3.webp')",
             backgroundSize: "contain",
             backgroundPosition: "bottom",

@@ -18,6 +18,14 @@ export default function Home() {
     </section>
       
       <OurCraft />
+       <section className="relative isolate z-10">
+        <ConnectWithUs />
+     </section>
+     
+       <section className="relative isolate z-10">
+        <Footer />
+     </section>
+      
 
         <section className="relative isolate z-10">
         <ConnectWithUs />

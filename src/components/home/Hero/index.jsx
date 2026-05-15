@@ -5,8 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { HeroCanvas } from "./HeroCanvas";
 import { HeroLoader, HeroContent } from "./HeroContent";
-import { BG_IMAGE_URL, BLUR_IMAGE_URL, getImageUrl, TOTAL_FRAMES } from "./hero.config";
-import FlipButton from "@/components/ui/FlipButton";
+import { BG_IMAGE_URL, BLUR_IMAGE_URL, getImageUrl, TOTAL_FRAMES } from "./Hero.config";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -121,6 +120,8 @@ export default function Hero() {
             backgroundImage: `url(${BG_IMAGE_URL})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
+            maskImage: "radial-gradient(ellipse 60% 55% at 50% 50%, black 30%, transparent 100%)",
+            WebkitMaskImage: "radial-gradient(ellipse 60% 55% at 50% 50%, black 30%, transparent 100%)",
           }}
         >
           {/* Blur Layer */}
@@ -132,6 +133,7 @@ export default function Hero() {
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
               opacity: 1,
+              
             }}
           />
           
