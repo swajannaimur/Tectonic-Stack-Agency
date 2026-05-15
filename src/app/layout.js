@@ -1,8 +1,9 @@
 
 
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Inter, Montserrat } from "next/font/google";
 import "./globals.css";
-import SmoothScroll from "@/components/common/SmoothScroll";
+import SmoothScroll from "@/components/effects/SmoothScroll";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,6 +14,16 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+});
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
+  subsets: ["latin"],
+});
+
+
 
 export const metadata = {
   title: "Tectonic Stack Agency",
@@ -23,7 +34,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable}  antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${montserrat.variable}  antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <SmoothScroll />

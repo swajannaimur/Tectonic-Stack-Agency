@@ -2,7 +2,6 @@
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { Paragraph, SectionTitle } from "../common/typography";
-import FlipButton from "../shared/FlipButton";
 
 export default function IdeasToImpact() {
   const sectionRef = useRef(null);
@@ -150,7 +149,7 @@ export default function IdeasToImpact() {
           ref={bgRef}
           className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: "url('/ideas-blur-2.webp')",
+            backgroundImage: "url('/images/projects/ideas-blur-2.webp')",
             willChange: "transform, opacity",
           }}
         />
@@ -161,7 +160,7 @@ export default function IdeasToImpact() {
           style={{
             width: "2000px",
             height: "800px",
-            backgroundImage: "url('/ideas-blur-3.webp')",
+            backgroundImage: "url('/images/projects/ideas-blur-3.webp')",
             backgroundSize: "contain",
             backgroundPosition: "bottom",
             backgroundRepeat: "no-repeat",
@@ -180,10 +179,7 @@ export default function IdeasToImpact() {
             We turn bold visions into reality, combining strategic thinking with 
             flawless execution to move your brand forward.
           </Paragraph>
-          <FlipButton
-            text="OUR PROCESS"
-            className="text-black hover:bg-gray-200 border border-black"
-          />
+     
         </div>
       </div>
     </section>

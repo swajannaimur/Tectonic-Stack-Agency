@@ -5,11 +5,11 @@ import TitleHoverEffect from '../common/TitleHoverEffect';
 import CategoryTabs from '../common/CategoryTabs';
 
 const projectsData = [
-  { id: 1, title: "Tower Garage Doors", categories: ["UI/UX", "DEVELOPMENT", "3D"], image: "/projects/Home.png (1).png" },
-  { id: 2, title: "Uptown", categories: ["UI/UX", "DEVELOPMENT"], image: "/projects/hero-section.png.png" },
-  { id: 3, title: "3D Showroom", categories: ["UI/UX", "DEVELOPMENT", "3D"], image: "/projects/image_2025-12-16_150442306-scaled.png.png" },
-  { id: 4, title: "Cirus", categories: ["UI/UX", "DEVELOPMENT", "3D"], image: "/projects/Home.png.png" },
-  { id: 5, title: "FLIGHT PATH", categories: ["UI/UX", "DEVELOPMENT", "3D"], image: "/projects/project-1.webp" },
+  { id: 1, title: "Tower Garage Doors", categories: ["UI/UX", "DEVELOPMENT", "3D"], image: "/images/our-craft/Home.png (1).png" },
+  { id: 2, title: "Uptown", categories: ["UI/UX", "DEVELOPMENT"], image: "/images/our-craft/hero-section.png.png" },
+  { id: 3, title: "3D Showroom", categories: ["UI/UX", "DEVELOPMENT", "3D"], image: "/images/our-craft/image_2025-12-16_150442306-scaled.png.png" },
+  { id: 4, title: "Cirus", categories: ["UI/UX", "DEVELOPMENT", "3D"], image: "/images/our-craft/Home.png.png" },
+  { id: 5, title: "FLIGHT PATH", categories: ["UI/UX", "DEVELOPMENT", "3D"], image: "/images/our-craft/project-1.webp" },
 ];
 
 const OurCraft = () => {
@@ -26,7 +26,7 @@ const OurCraft = () => {
 
   return (
     <section className="bg-black text-white py-20 px-10 relative z-10 isolate min-h-screen">
-      <div className="flex justify-between items-end mb-16">
+      <div className="flex flex-col md:flex-row justify-between items-end mb-16">
         <h2 className="text-5xl font-medium leading-tight">Our Craft,<br/> Your Expression.</h2>
        <div>
          <ViewAllButton 
