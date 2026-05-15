@@ -1,7 +1,7 @@
 "use client";
 
 import { forwardRef } from "react";
-import { TAGS, CATEGORIES } from "./hero.config";
+import { TAGS, CATEGORIES } from "./Hero.config";
 import { Paragraph, SectionTitle } from "@/components/common/typography";
 import FlipButton from "@/components/ui/FlipButton";
 import CategoryTabs from "@/components/common/CategoryTabs";
