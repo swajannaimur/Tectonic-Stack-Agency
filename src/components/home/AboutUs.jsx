@@ -175,7 +175,6 @@ const startAnimation = () => {
           </Paragraph>
           <FlipButton
             text="ABOUT US"
-            className="text-black hover:bg-gray-200 border border-black"
           />
         </div>
       </div>

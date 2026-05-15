@@ -2,7 +2,6 @@
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { Paragraph, SectionTitle } from "../common/typography";
-import FlipButton from "../ui/FlipButton";
 
 export default function IdeasToImpact() {
   const sectionRef = useRef(null);
@@ -180,10 +179,7 @@ export default function IdeasToImpact() {
             We turn bold visions into reality, combining strategic thinking with 
             flawless execution to move your brand forward.
           </Paragraph>
-          <FlipButton
-            text="OUR PROCESS"
-            className="text-black hover:bg-gray-200 border border-black"
-          />
+     
         </div>
       </div>
     </section>
